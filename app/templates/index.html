@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>TechnoStore</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monomakh&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header_inner">
+            <div class="store_logo">
+                <a href="/" class="store_logo">
+                    <img src="{{ url_for('static', filename='imgs/logo.png') }}" alt="TechnoStore" width="40px"
+                         height="40px">
+                </a>
+            </div>
+            <div class="store_name">Techno Store</div>
+            <!-- Бургер -->
+            <div class="burger" onclick="menuOnClick()">
+                <div class="burger-bar">
+                    <div class="povorot">
+                        <div id="bar1" class="bar"></div>
+                        <div id="bar2" class="bar"></div>
+                        <div id="bar3" class="bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Меню при десктопе -->
+            <nav class="appearing_menu">
+                <ul class="menu_list">
+                    <li class="menu_item">
+                        <a href="/" class="menu_link" onclick="menuOffClick()">
+                            Все товары
+                        </a>
+                    </li>
+                    {% for category in categories %}
+                    <li class="menu_item">
+                        <a href="/category/{{ category.name | urlencode  }}" class="menu_link" onclick="menuOffClick()">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<!--Тут будет название категории-->
+<section class="category">
+    <div class="container">
+        <div class="category_name">{{ category_name }}</div>
+    </div>
+</section>
+<!--Тут список продуктов согласно выбранной категории-->
+<section class="products">
+    <div class="container">
+        <div class="product-grid">
+            {% for product in products %}
+            <div class="product-item">
+                <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}">
+                <div class="product-name">{{ product.name }}</div>
+                <div class="product-price">Цена: {{ product.price }} руб.</div>
+                <form class="quantity-control" onsubmit="cartManage(event, '{{ product.product_id }}')">
+                    <!-- Кнопки количества в зависимости от корзины -->
+                    <input type="hidden" name="product_id" value="{{ product.product_id }}">
+                    {% if product.product_id not in cart %}
+                        <div class="quantity-buttons">
+                            <button type="button" class="button_quantity"
+                                    onclick="changeQuantity('{{ product.product_id }}', -1)">-
+                            </button>
+                            <input type="text" pattern="\d*" inputmode="numeric" id="quantity_{{ product.product_id }}" name="quantity" value="1">
+                            <button type="button" class="button_quantity"
+                                    onclick="changeQuantity('{{ product.product_id }}', 1)">+
+                            </button>
+                        </div>
+                        <div class="cart-button">
+                            <button type="submit" data-state="add">В корзину</button>
+                        </div>
+                    {% else %}
+                        <div class="quantity-buttons">
+                            <button type="button" disabled class="button_quantity"
+                                    onclick="changeQuantity('{{ product.product_id }}', -1)">-
+                            </button>
+                            <input type="text" inputmode="numeric" id="quantity_{{ product.product_id }}" name="quantity" value="{{ cart[product.product_id] }}" readonly>
+                            <button type="button" disabled class="button_quantity"
+                                    onclick="changeQuantity('{{ product.product_id }}', 1)">+
+                            </button>
+                        </div>
+                        <div class="cart-button">
+                            <button type="submit" data-state="rm">✓ В корзине</button>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/menu.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/ordering.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/correcting_values.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,243 @@
+/**** Общие настройки ****/
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    /*background-color: #252525;*/
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header_inner {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.store_name {
+    font-size: 30px;
+    color: black;
+    font-family: "Monomakh", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/**** Шапка ****/
+
+.burger {
+    right: 0;
+    z-index: 3;
+}
+
+.burger-bar {
+    width: 40px;
+    height: 100%;
+    cursor: pointer;
+}
+
+.bar {
+    height: 5px;
+    width: 100%;
+    background-color: black;
+    border-radius: 5px;
+    transition: 0.5s ease;
+}
+
+#bar1 {
+    transform: rotateZ(0deg) scaleX(1) translate(0px, -7px);
+}
+
+#bar3 {
+    transform: rotateZ(0deg) scaleX(1) translate(0px, 7px);
+}
+
+.burger-bar-active #bar1 {
+    /* transform: rotateZ(-45deg) scaleX(0.65) translate(-9px, -13px); */
+    transform: rotateZ(-45deg) translate(0px, 7px);
+    background-color: white;
+}
+
+.burger-bar-active #bar2 {
+    opacity: 0;
+    background-color: white;
+}
+
+.burger-bar-active #bar3 {
+    /* transform: rotateZ(45deg) scaleX(0.65) translate(-9px, 13px); */
+    transform: rotateZ(45deg) translate(0px, -7px);
+    background-color: white;
+}
+
+/**** Появляющееся Меню категорий ****/
+.appearing_menu ul {
+        flex-direction: column;
+}
+
+.appearing_menu li+li {
+    margin-left: 0;
+}
+
+.appearing_menu ul li {
+    margin: 10px 0;
+}
+
+/* Бургер меню */
+.appearing_menu {
+    z-index: 2;
+    position: absolute;
+    right: -225px;
+    top: 0;
+    width: 225px;
+    height: 100%;
+    background-color: rgba(21, 21, 21, 0.65);
+    ;
+    visibility: hidden;
+    transition: transform 0.5s, visibility 0.5s;
+}
+
+.menu_list {
+    display: block;
+    margin-top: 60px;
+    text-align: center;
+    padding: 0;
+}
+
+.menu_item:not(:last-child) {
+    margin-right: 0;
+}
+
+.menu_link {
+    color: #ffffff;
+    font-size: 21px;
+    display: block;
+    padding: 10px;
+}
+
+.appearing_menu.appearing_menu_active {
+    transform: translateX(-100%);
+    visibility: visible;
+}
+
+.appearing_menu ul {
+    list-style-type: none;
+    flex-direction: column;
+}
+
+/**** Название категории ****/
+
+.category_name {
+    font-size: 20px;
+    color: black;
+    font-family: "Monomakh", serif;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/**** Карточки продуктов ****/
+
+.product-name {
+    font-size: 8pt;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: 8pt;
+    margin-bottom: 5px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 4 колонки */
+    gap: 10px; /* Расстояние между карточками */
+    /*padding: 16px;*/
+    align-items: stretch;
+}
+
+.product-item {
+    background-color: #f5f4f4;
+    border: 1px solid #9b9999;
+    border-radius: 10px;
+    padding: 5px;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.product-item img {
+    max-width: 80px;
+    height: auto;
+}
+
+.quantity-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-size: 8pt;
+
+    margin-top: auto;
+    width: 100%;
+}
+
+.quantity-control button {
+    padding: 3px 8px;
+    font-size: 8pt
+}
+
+.quantity-control input {
+    width: 30px;
+    height: 20px;
+    font-size: 8pt;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.product-item button[data-state="add"] {
+    width: 100%;
+    color: white;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/*При наведении на кнопку*/
+/*.product-item button[data-state="add"]:hover {*/
+
+/*}*/
+
+.product-item button[data-state="rm"] {
+    width: 100%;
+    color: white;
+    background-color: #19652a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/*При наведении на кнопку*/
+/*.product-item button[data-state="add"]:hover {*/
+
+/*}*/
+

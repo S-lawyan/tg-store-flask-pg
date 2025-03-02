@@ -1,0 +1,27 @@
+from dataclasses import dataclass
+from pydantic import BaseModel
+from pydantic import SecretStr
+
+
+@dataclass
+class BotConfig(BaseModel):
+    token: SecretStr
+    admin_ids: list[str]
+
+
+@dataclass
+class DatabaseConfig(BaseModel):
+    host: str
+    port: int
+    user: str
+    password: SecretStr
+    database: str
+
+
+@dataclass
+class AppConfig(BaseModel):
+    app_name: str
+    secret_key: SecretStr
+    bot: BotConfig
+    database: DatabaseConfig
+
